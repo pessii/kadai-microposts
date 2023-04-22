@@ -85,12 +85,6 @@ class UsersController extends Controller
         ]);
     }
     
-    /**
-     * ユーザのフォロワー一覧ページを表示するアクション。
-     *
-     * @param  $id  ユーザのid
-     * @return \Illuminate\Http\Response
-     */
     public function favorites($id)
     {
         // idの値でユーザを検索して取得
@@ -101,11 +95,14 @@ class UsersController extends Controller
 
         // ユーザのお気に入り一覧を取得
         $favorites = $user->favorites()->paginate(10);
+        
+        $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
 
         // お気に入り一覧ビューでそれらを表示
         return view('users.favorites', [
             'user' => $user,
-            'users' => $favorites,
+            'microposts' => $microposts,
+            'favorites' => $favorites,
         ]);
     }
 }

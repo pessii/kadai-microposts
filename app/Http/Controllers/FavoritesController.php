@@ -12,10 +12,11 @@ class FavoritesController extends Controller
      * @param  $id  相手ユーザのid
      * @return \Illuminate\Http\Response
      */
-    public function store($id)
+    public function store(Request $request, $id)
     {
         // 認証済みユーザ（閲覧者）が、 idのユーザを登録する
         \Auth::user()->favorite($id);
+
         // 前のURLへリダイレクトさせる
         return back();
     }
